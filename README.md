@@ -6,4 +6,4 @@
 
 ## Программный интерфейс приложения РОСЧАТ
 
-### Описание программного интерфейса ботов: [roschat-bot-api](https://github.com/roschat/roschat-docs/wiki/roschat-bot-api).
+### Описание протокола ботов: [roschat-bot-api](https://github.com/roschat/roschat-docs/wiki/roschat-bot-api).
