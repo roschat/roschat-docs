@@ -1,4 +1,4 @@
 # roschat-docs
-Documentation and Tutorials for ROSCHAT Server
+Документация и пользователькое руководство сервера РОСЧАТ.
 
 ### Описание программного интерфейса ботов: [roschat-bot-api](https://github.com/roschat/roschat-docs/wiki/roschat-bot-api).
