@@ -1,0 +1,31 @@
+MINICOM-MIB DEFINITIONS ::= BEGIN
+  
+
+IMPORTS
+  enterprises
+    FROM RFC1155-SMI;
+
+
+
+  -- MINICOM Corparative branch
+
+minicom OBJECT IDENTIFIER ::= { enterprises 34078 }
+
+  -- Registration branch
+
+minicomReg OBJECT IDENTIFIER ::= { minicom 1 }
+
+  -- Experimental branch
+
+minicomExp OBJECT IDENTIFIER ::= { minicom 2 }
+
+  -- Extensions branch
+
+minicomExt OBJECT IDENTIFIER ::= { minicom 3 }
+
+  -- Proprientary branch
+
+minicomProp OBJECT IDENTIFIER ::= { minicom 4 }
+
+
+END

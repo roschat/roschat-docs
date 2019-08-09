@@ -1,0 +1,413 @@
+ROSCHAT-M0-MIB DEFINITIONS ::= BEGIN
+               
+
+IMPORTS
+  OBJECT-TYPE
+    FROM RFC1155-SMI
+  roschat-m
+    FROM ROSCHAT-M-MIB
+  TRAP-TYPE
+    FROM RFC-1215;
+                  
+
+roschat-m0   OBJECT IDENTIFIER ::= { roschat-m 1 }
+                    
+
+DisplayString  ::= OCTET STRING
+
+DateTimeString ::= DisplayString (SIZE (0..20))
+
+StateType      ::= INTEGER {
+                       crush(1),
+                       warning(2),
+                       ok(3),
+                       unknown(4)
+                      }
+                      
+BoolType       ::= INTEGER {
+                       no(1),
+                       yes(2)
+                      }
+
+ --  MIB-II (same prefix as MIB-I)
+
+                                                                         
+
+-- *********************************************************************
+-- **************** SCALAR OBJECTS *************************************
+-- *********************************************************************
+
+publicNetwork OBJECT-TYPE
+      SYNTAX  BoolType
+      ACCESS  read-only
+      STATUS  mandatory
+      DESCRIPTION
+          "Status access to public network"
+
+      ::= { roschat-m0 1 }
+
+domainCertificate OBJECT-TYPE
+      SYNTAX  BoolType
+      ACCESS  read-only
+      STATUS  mandatory
+      DESCRIPTION
+          "Validating domain certificate"
+
+      ::= { roschat-m0 2 }
+
+domainCertificateTime OBJECT-TYPE
+      SYNTAX  TimeTicks
+      ACCESS  read-only
+      STATUS  mandatory
+      DESCRIPTION
+          "Time limit of domain certificate"
+
+      ::= { roschat-m0 3 }
+      
+userLicense OBJECT-TYPE
+      SYNTAX  BoolType
+      ACCESS  read-only
+      STATUS  mandatory
+      DESCRIPTION
+          "Validating license"
+
+      ::= { roschat-m0 4 }
+
+userLicenseLimit OBJECT-TYPE
+      SYNTAX  INTEGER
+      ACCESS  read-only
+      STATUS  mandatory
+      DESCRIPTION
+          "User limit of license"
+
+      ::= { roschat-m0 5 }
+
+userLicenseUsed OBJECT-TYPE
+      SYNTAX  INTEGER
+      ACCESS  read-only
+      STATUS  mandatory
+      DESCRIPTION
+          "Used user of license"
+
+      ::= { roschat-m0 6 }
+
+userLicenseTime OBJECT-TYPE
+      SYNTAX  TimeTicks
+      ACCESS  read-only
+      STATUS  mandatory
+      DESCRIPTION
+          "Time limit of license"
+
+      ::= { roschat-m0 7 }
+      
+pushServise OBJECT-TYPE
+      SYNTAX  BoolType
+      ACCESS  read-only
+      STATUS  mandatory
+      DESCRIPTION
+          "Status access to push servise"
+
+      ::= { roschat-m0 8 }
+      
+pushServiseApple OBJECT-TYPE
+      SYNTAX  BoolType
+      ACCESS  read-only
+      STATUS  mandatory
+      DESCRIPTION
+          "Status access to push servise Apple (APNS)"
+
+      ::= { roschat-m0 9 }
+      
+pushServiseGoogle OBJECT-TYPE
+      SYNTAX  BoolType
+      ACCESS  read-only
+      STATUS  mandatory
+      DESCRIPTION
+          "Status access to push servise Google (GCM)"
+
+      ::= { roschat-m0 10 }
+              
+finishElement OBJECT-TYPE
+      SYNTAX  INTEGER
+      ACCESS  read-only
+      STATUS  mandatory
+      DESCRIPTION
+          "Terminated element"
+
+      ::= { roschat-m0 32767 }
+
+               
+-- *********************************************************************
+-- **************** TABLE OBJECTS **************************************
+-- ********************************************************************* 
+
+
+-- *********************************************************************
+-- Servise Table
+-- *********************************************************************
+
+serviseTable OBJECT-TYPE
+      SYNTAX  SEQUENCE OF ServiseEntry
+      ACCESS  not-accessible
+      STATUS  mandatory
+      DESCRIPTION
+          "Servise table"   
+
+      ::= { roschat-m0 11 }
+
+      serviseEntry OBJECT-TYPE
+            SYNTAX  ServiseEntry
+            ACCESS  not-accessible
+            STATUS  mandatory
+            INDEX { ServiseNum }        
+
+      ::= { serviseTable 1 }
+
+      ServiseEntry ::= SEQUENCE {
+                               serviseNum         INTEGER,
+                               serviseName        DisplayString,
+                               serviseState       StateType,
+                               serviseStateTime   DateTimeString
+                              }
+
+            serviseNum OBJECT-TYPE
+                  SYNTAX  INTEGER
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  DESCRIPTION
+                      "# Servise"
+
+                  ::= { serviseEntry 1 }
+
+            serviseName  OBJECT-TYPE
+                  SYNTAX  DisplayString (SIZE (0..255))
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  DESCRIPTION
+                      "Servise name"
+
+                  ::= { serviseEntry 2 }
+
+            serviseState  OBJECT-TYPE
+                  SYNTAX  StateType
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  DESCRIPTION
+                      "Servise state"
+
+                  ::= { serviseEntry 3 }
+                                    
+            serviseStateTime OBJECT-TYPE
+                  SYNTAX  DateTimeString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  DESCRIPTION
+                      "Servise setted time"
+
+                  ::= { serviseEntry 4 }
+
+                              
+-- *********************************************************************
+-- Provider Table
+-- *********************************************************************                                             
+
+providerTable OBJECT-TYPE
+      SYNTAX  SEQUENCE OF ProviderEntry
+      ACCESS  not-accessible
+      STATUS  mandatory
+      DESCRIPTION
+          "Provider table"
+
+      ::= { roschat-m0 12 }
+
+      providerEntry OBJECT-TYPE
+            SYNTAX  ProviderEntry
+            ACCESS  not-accessible
+            STATUS  mandatory
+            INDEX { providerNum }
+
+            ::= { providerTable 1 }
+
+      ProviderEntry ::= SEQUENCE {
+                               providerNum         INTEGER,
+                               providerName        DisplayString,
+                               providerDescription DisplayString,
+                               providerAdress      DisplayString,
+                               providerState       StateType,
+                              }
+
+            providerNum OBJECT-TYPE
+                  SYNTAX  INTEGER
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  DESCRIPTION
+                      "# Provider"
+
+                  ::= { providerEntry 1 }
+                  
+            providerName  OBJECT-TYPE
+                  SYNTAX  DisplayString (SIZE (1..255))
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  DESCRIPTION
+                      "Provider name"
+
+                  ::= { providerEntry 2 }
+                  
+            providerDescription  OBJECT-TYPE
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  DESCRIPTION
+                      "Provider description"
+
+                  ::= { providerEntry 3 }
+                  
+            providerAdress  OBJECT-TYPE (SIZE (0..32))
+                  SYNTAX  DisplayString
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  DESCRIPTION
+                      "Provider adress"
+
+                  ::= { providerEntry 4 }
+
+            providerState  OBJECT-TYPE
+                  SYNTAX  StateType
+                  ACCESS  read-only
+                  STATUS  mandatory
+                  DESCRIPTION
+                      "Provider state"
+
+                  ::= { providerEntry 5 }
+
+-- *********************************************************************
+-- **************** TRAPS **********************************************
+-- ********************************************************************* 
+
+agentOffTrap TRAP-TYPE
+        ENTERPRISE roschat-m0
+        DESCRIPTION
+                "Agent Off"
+        ::= 1
+
+agentOnTrap TRAP-TYPE
+        ENTERPRISE roschat-m0
+        DESCRIPTION
+                "Agent On"
+        ::= 2
+        
+publicNetworkNo  TRAP-TYPE
+        ENTERPRISE roschat-m0
+        VARIABLES { publicNetwork }
+        DESCRIPTION
+                "Denied access to public network"
+        ::= 3
+        
+publicNetworkYes  TRAP-TYPE
+        ENTERPRISE roschat-m0
+        VARIABLES { publicNetwork }
+        DESCRIPTION
+                "Access to public network is present"
+        ::= 4
+        
+domainCertificateInvalid TRAP-TYPE
+        ENTERPRISE roschat-m0
+        VARIABLES { domainCertificate }
+        DESCRIPTION
+                "Invalide domain certificate"
+        ::= 5
+        
+domainCertificateValid TRAP-TYPE
+        ENTERPRISE roschat-m0
+        VARIABLES { domainCertificate }
+        DESCRIPTION
+                "Valide domain certificate"
+        ::= 6
+        
+userLicenseInvalid TRAP-TYPE
+        ENTERPRISE roschat-m0
+        VARIABLES { userLicense }
+        DESCRIPTION
+                "Invalide user license"
+        ::= 7
+        
+domainCertificateValid TRAP-TYPE
+        ENTERPRISE roschat-m0
+        VARIABLES { userLicense }
+        DESCRIPTION
+                "Valide user license"
+        ::= 8
+        
+pushServiseNo  TRAP-TYPE
+        ENTERPRISE roschat-m0
+        VARIABLES { pushServise }
+        DESCRIPTION
+                "Denied access to push servise"
+        ::= 9
+        
+pushServiseYes  TRAP-TYPE
+        ENTERPRISE roschat-m0
+        VARIABLES { pushServise }
+        DESCRIPTION
+                "Denied access to push servise"
+        ::= 10
+        
+pushServiseAplleNo  TRAP-TYPE
+        ENTERPRISE roschat-m0
+        VARIABLES { pushServiseApple }
+        DESCRIPTION
+                "Denied access to push servise Aplle"
+        ::= 11
+        
+pushServiseAplleYes  TRAP-TYPE
+        ENTERPRISE roschat-m0
+        VARIABLES { pushServiseApple }
+        DESCRIPTION
+                "Denied access to push servise Aplle"
+        ::= 12
+        
+pushServiseGoogleNo  TRAP-TYPE
+        ENTERPRISE roschat-m0
+        VARIABLES { pushServiseGoogle }
+        DESCRIPTION
+                "Denied access to push servise Google"
+        ::= 13
+        
+pushServiseGoogleYes  TRAP-TYPE
+        ENTERPRISE roschat-m0
+        VARIABLES { pushServiseGoogle }
+        DESCRIPTION
+                "Denied access to push servise Google"
+        ::= 14
+                
+serviseStateCrush  TRAP-TYPE
+        ENTERPRISE roschat-m0
+        VARIABLES { serviseState }
+        DESCRIPTION
+                "Servise state is Crush"
+        ::= 15
+        
+serviseStateOk  TRAP-TYPE
+        ENTERPRISE roschat-m0
+        VARIABLES { serviseState }
+        DESCRIPTION
+                "Servise state is Ok"
+        ::= 16
+                
+providerStateCrush  TRAP-TYPE
+        ENTERPRISE roschat-m0
+        VARIABLES { providerState }
+        DESCRIPTION
+                "Provider state is Crush"
+        ::= 17
+        
+providerStateOk  TRAP-TYPE
+        ENTERPRISE roschat-m0
+        VARIABLES { providerState }
+        DESCRIPTION
+                "Provider state is Ok"
+        ::= 18
+
+END
+

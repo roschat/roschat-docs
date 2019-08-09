@@ -1,0 +1,13 @@
+ROSCHAT-MIB DEFINITIONS ::= BEGIN
+  
+
+IMPORTS
+  minicomProp
+    FROM MINICOM-MIB;
+
+
+  -- ROSCHAT branch
+
+roschat        OBJECT IDENTIFIER ::= { minicomProp 3 }
+
+END

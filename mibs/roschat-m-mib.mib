@@ -1,0 +1,13 @@
+ROSCHAT-M-MIB DEFINITIONS ::= BEGIN
+  
+
+IMPORTS
+  roschat
+    FROM ROSCHAT-MIB;
+
+
+  -- ROSCHAT-M branch
+
+roschat-m        OBJECT IDENTIFIER ::= { roschat 1 }
+
+END
