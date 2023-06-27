@@ -27,5 +27,27 @@ minicomExt OBJECT IDENTIFIER ::= { minicom 3 }
 
 minicomProp OBJECT IDENTIFIER ::= { minicom 4 }
 
+  -- DX500 branch
+
+upats   OBJECT IDENTIFIER ::= { minicomProp 1 }
+  -- TETRA branch
+
+tetra   OBJECT IDENTIFIER ::= { minicomProp 2 }
+
+  -- SWITCH branch
+
+switch  OBJECT IDENTIFIER ::= { minicomProp 3 }
+
+  -- MX1000 branch
+
+ipats   OBJECT IDENTIFIER ::= { minicomProp 4 }
+
+  -- voip branch
+
+voip    OBJECT IDENTIFIER ::= { minicomProp 5 }
+
+  -- roschat branch
+
+roschat OBJECT IDENTIFIER ::= { minicomProp 6 }
 
 END
