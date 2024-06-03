@@ -7,3 +7,4 @@
 ## Программный интерфейс сервера РОСЧАТ
 
 ### Описание протокола ботов: [roschat-bot-api](https://github.com/roschat/roschat-docs/wiki/roschat-bot-api).
+### Описание протокола клиента (краткое): [roschat-bot-api](https://github.com/roschat/roschat-docs/wiki/roschat‐client‐api).
